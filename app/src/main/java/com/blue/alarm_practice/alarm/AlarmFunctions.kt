@@ -1,4 +1,4 @@
-package com.blue.alarm_practice
+package com.blue.alarm_practice.alarm
 
 import android.annotation.SuppressLint
 import android.app.AlarmManager
@@ -7,8 +7,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.util.Log
-import java.text.ParseException
-import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 
@@ -18,7 +16,7 @@ class AlarmFunctions(
     @SuppressLint("ScheduleExactAlarm")
     fun callAlarm(time: Date, alarm_code : Int, content: String){
         Log.e("TAG", "callAlarm: $time / $alarm_code / $content", )
-        val alarmManger = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val alarmManger = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val receiverIntent = Intent(context, AlarmReceiver::class.java)
         receiverIntent.apply {
             putExtra("alarm_rqCode", alarm_code)
@@ -31,13 +29,6 @@ class AlarmFunctions(
             PendingIntent.getBroadcast(context, alarm_code, receiverIntent, PendingIntent.FLAG_UPDATE_CURRENT)
         }
 
-//        val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-//        var dateTime = Date()
-//        try {
-//            dateTime = dateFormat.parse(time) as Date
-//        } catch (e: ParseException){
-//            e.printStackTrace()
-//        }
         val calendar = Calendar.getInstance()
         calendar.time = time
 

@@ -1,4 +1,4 @@
-package com.blue.alarm_practice
+package com.blue.alarm_practice.alarm
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -9,6 +9,8 @@ import android.content.Intent
 import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
+import com.blue.alarm_practice.MainActivity
+import com.blue.alarm_practice.R
 import java.net.IDN
 
 class AlarmReceiver: BroadcastReceiver() {
@@ -30,14 +32,14 @@ class AlarmReceiver: BroadcastReceiver() {
                 NotificationChannel(
                     MY_ID,
                     MY_NAME,
-                    NotificationManager.IMPORTANCE_DEFAULT
+                    NotificationManager.IMPORTANCE_HIGH
                 )
             )
         }
 
         builder = NotificationCompat.Builder(context, MY_ID)
 
-        val intent2 = Intent(context, AlarmService::class.java)
+        val intent2 = Intent(context, MainActivity::class.java)
         val requestCode = intent?.extras!!.getInt("alarm_rqCode")
         val title = intent.extras!!.getString("content")
 

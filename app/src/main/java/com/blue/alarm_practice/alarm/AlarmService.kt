@@ -1,4 +1,4 @@
-package com.blue.alarm_practice
+package com.blue.alarm_practice.alarm
 
 import android.app.Service
 import android.content.Intent

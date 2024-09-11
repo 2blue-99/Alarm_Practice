@@ -2,7 +2,6 @@ package com.blue.alarm_practice
 
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -17,14 +16,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.blue.alarm_practice.alarm.AlarmFunctions
 import com.blue.alarm_practice.ui.theme.Alarm_PracticeTheme
-import java.sql.Timestamp
 import java.time.LocalDateTime
 import java.time.ZoneId
-import java.time.format.DateTimeFormatter
 import java.util.Date
 import kotlin.random.Random
-import kotlin.random.nextInt
 
 class MainActivity : ComponentActivity() {
 
@@ -76,7 +73,7 @@ fun Test(
 
 
         Button(onClick = {
-            val localDateTime = LocalDateTime.now().plusMinutes(1) // 현재 시간을 LocalDateTime으로 생성
+            val localDateTime = LocalDateTime.now().plusSeconds(10) // 현재 시간을 LocalDateTime으로 생성
             val zoneId = ZoneId.systemDefault() // 시스템의 기본 시간대 정보를 사용
             val instant = localDateTime.atZone(zoneId).toInstant() // LocalDateTime을 Instant로 변환
             setAlarm(Date.from(instant), Random.nextInt(1000), "hello")
