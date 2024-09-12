@@ -39,23 +39,33 @@ class AlarmReceiver: BroadcastReceiver() {
 
         builder = NotificationCompat.Builder(context, MY_ID)
 
-        val intent2 = Intent(context, MainActivity::class.java)
-        val requestCode = intent?.extras!!.getInt("alarm_rqCode")
-        val title = intent.extras!!.getString("content")
-
-        val pendingIntent = if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.S){
-            PendingIntent.getActivity(context, requestCode, intent2, PendingIntent.FLAG_IMMUTABLE)
-        } else {
-            PendingIntent.getActivity(context, requestCode, intent2, PendingIntent.FLAG_UPDATE_CURRENT)
+        val activityIntent = Intent(context, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
 
-        val notification = builder.setContentTitle(title)
-            .setContentText("SCHEDULE MANAGER")
-            .setSmallIcon(R.drawable.ic_launcher_foreground)
-            .setAutoCancel(true)
-            .setContentIntent(pendingIntent)
-            .build()
 
-        manager.notify(1, notification)
+//        val intent2 = Intent(context, MainActivity::class.java)
+//        intent2.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+//        val requestCode = intent?.extras!!.getInt("alarm_rqCode")
+//        val title = intent.extras!!.getString("content")
+
+//        val pendingIntent = if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.S){
+//            PendingIntent.getActivity(context, requestCode, intent2, PendingIntent.FLAG_IMMUTABLE)
+//        } else {
+//            PendingIntent.getActivity(context, requestCode, intent2, PendingIntent.FLAG_UPDATE_CURRENT)
+//        }
+
+//        pendingIntent.send()
+
+        context.startActivity(activityIntent)
+
+//        val notification = builder.setContentTitle(title)
+//            .setContentText("SCHEDULE MANAGER")
+//            .setSmallIcon(R.drawable.ic_launcher_foreground)
+//            .setAutoCancel(true)
+//            .setContentIntent(pendingIntent)
+//            .build()
+
+//        manager.notify(1, notification)
     }
 }
