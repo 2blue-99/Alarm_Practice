@@ -43,6 +43,8 @@ class AlarmReceiver: BroadcastReceiver() {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
 
+        context.startActivity(activityIntent)
+
 
 //        val intent2 = Intent(context, MainActivity::class.java)
 //        intent2.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
@@ -57,7 +59,6 @@ class AlarmReceiver: BroadcastReceiver() {
 
 //        pendingIntent.send()
 
-        context.startActivity(activityIntent)
 
 //        val notification = builder.setContentTitle(title)
 //            .setContentText("SCHEDULE MANAGER")
