@@ -4,6 +4,7 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -39,11 +40,26 @@ class AlarmReceiver: BroadcastReceiver() {
 
         builder = NotificationCompat.Builder(context, MY_ID)
 
+//        AlarmService(context).onCreate()
+
         val activityIntent = Intent(context, MainActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         }
 
         context.startActivity(activityIntent)
+
+//        val serviceIntent = Intent(context, AlarmService::class.java)
+//
+//        context.startForegroundService(serviceIntent)
+
+//        Intent().also { intents ->
+//            intents.component = ComponentName(
+//                "com.blue.alarm_practice",
+//                "com.blue.alarm_practice.MainActivity"
+//            )
+//            intents.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+//            context.startActivity(intents)
+//        }
 
 
 //        val intent2 = Intent(context, MainActivity::class.java)

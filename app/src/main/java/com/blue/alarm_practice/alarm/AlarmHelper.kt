@@ -10,12 +10,11 @@ import android.util.Log
 import java.util.Calendar
 import java.util.Date
 
-class AlarmFunctions(
+class AlarmHelper(
     private val context: Context
 ) {
     @SuppressLint("ScheduleExactAlarm")
     fun callAlarm(time: Date, alarm_code : Int, content: String){
-        Log.e("TAG", "callAlarm: $time / $alarm_code / $content", )
         val alarmManger = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val receiverIntent = Intent(context, AlarmReceiver::class.java)
         receiverIntent.apply {
@@ -32,7 +31,7 @@ class AlarmFunctions(
         val calendar = Calendar.getInstance()
         calendar.time = time
 
-        Log.e("TAG", "dateTime: $time", )
+        Log.e("TAG", "시간 : $time", )
         alarmManger.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
     }
 

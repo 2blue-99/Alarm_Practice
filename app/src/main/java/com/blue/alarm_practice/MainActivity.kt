@@ -1,8 +1,11 @@
 package com.blue.alarm_practice
 
+import android.app.KeyguardManager
+import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -17,7 +20,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.blue.alarm_practice.alarm.AlarmFunctions
+import com.blue.alarm_practice.alarm.AlarmHelper
 import com.blue.alarm_practice.ui.theme.Alarm_PracticeTheme
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -27,13 +30,31 @@ import kotlin.random.Random
 class MainActivity : ComponentActivity() {
 
     private val mainViewModel: MainViewModel by viewModels()
-    private lateinit var alarmHelper: AlarmFunctions
+    private lateinit var alarmHelper: AlarmHelper
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
-        Log.e("TAG", "onCreate: ", )
+
+        setShowWhenLocked(true)
+        setTurnScreenOn(true)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
+            (getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager).apply {
+                requestDismissKeyguard(this@MainActivity, null)
+            }
+        }
+        else {
+            this.window.addFlags(
+                WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD or
+                        WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED or
+                        WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
+            )
+        }
+
+
+
+        Log.e("TAG", "onCreate: ")
         super.onCreate(savedInstanceState)
-        alarmHelper = AlarmFunctions(this)
+        alarmHelper = AlarmHelper(this)
 
         setContent {
             Alarm_PracticeTheme {
@@ -73,7 +94,7 @@ fun Test(
 
 
         Button(onClick = {
-            val localDateTime = LocalDateTime.now().plusSeconds(10) // 현재 시간을 LocalDateTime으로 생성
+            val localDateTime = LocalDateTime.now().plusSeconds(5) // 현재 시간을 LocalDateTime으로 생성
             val zoneId = ZoneId.systemDefault() // 시스템의 기본 시간대 정보를 사용
             val instant = localDateTime.atZone(zoneId).toInstant() // LocalDateTime을 Instant로 변환
             setAlarm(Date.from(instant), Random.nextInt(1000), "hello")
